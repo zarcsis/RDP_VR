@@ -1,3 +1,6 @@
 [submodule "ThirdParty/OpenSSL"]
 	path = ThirdParty/OpenSSL
 	url = https://github.com/openssl/openssl.git
+[submodule "ThirdParty/FreeRDP"]
+	path = ThirdParty/FreeRDP
+	url = https://github.com/FreeRDP/FreeRDP.git
