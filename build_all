@@ -1,4 +1,45 @@
 #!/usr/bin/env bash
+set -e
 
-SDK="~/AndroidSDK/"
-NDK=""
+COMMAND_LINE_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip"
+GRADLE_URL="https://services.gradle.org/distributions/gradle-7.3.2-bin.zip"
+NDK_VERSION="23.1.7779620"
+
+TOOLS_PATH="./tools/"
+mkdir -p "${TOOLS_PATH}"
+
+# Install SDK
+SDK="${TOOLS_PATH}SDK/"
+SDK_MANAGER="${SDK}cmdline-tools/latest/bin/sdkmanager"
+if [ ! -f "${SDK_MANAGER}" ]; then
+    COMMAND_LINE_TOOLS_ZIP="${TOOLS_PATH}commandlinetools.zip"
+    test -f "${COMMAND_LINE_TOOLS_ZIP}" || wget -O "${COMMAND_LINE_TOOLS_ZIP}" "${COMMAND_LINE_TOOLS_URL}"
+    TMP_PATH="${TOOLS_PATH}tmp/"
+    rm -rf "${TMP_PATH}"
+    unzip "${COMMAND_LINE_TOOLS_ZIP}" -d "${TMP_PATH}"
+    SDK_INSTALLER="${TMP_PATH}cmdline-tools/bin/sdkmanager"
+    yes | "${SDK_INSTALLER}" --sdk_root="${SDK}" --licenses
+    "${SDK_INSTALLER}" --sdk_root="${SDK}" --install "cmdline-tools;latest"
+    rm -rf "${TMP_PATH}"
+    rm -rf "${COMMAND_LINE_TOOLS_ZIP}"
+fi
+export ANDROID_SDK_ROOT="${SDK}"
+
+# Install NDK
+"${SDK_MANAGER}" --install "ndk;${NDK_VERSION}"
+NDK="${SDK}ndk/${NDK_VERSION}/"
+
+# TODO: Build native components.
+
+# Install Gradle
+GRADLE="${SDK}gradle/bin/gradle"
+if [ ! -f "${GRADLE}" ]; then
+    GRADLE_ZIP="${TOOLS_PATH}gradle.zip"
+    test -f "${GRADLE_ZIP}" || wget -O "${GRADLE_ZIP}" "${GRADLE_URL}"
+    unzip "${GRADLE_ZIP}" -d "${SDK}"
+    mv ${SDK}gradle-* "${SDK}gradle"
+    rm -rf "${GRADLE_ZIP}"
+fi
+
+# Build APK
+"${GRADLE}" build
