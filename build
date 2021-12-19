@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+SDK="~/AndroidSDK/"
+NDK=""
