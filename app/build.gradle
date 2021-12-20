@@ -5,7 +5,7 @@ plugins {
 
 android {
     compileSdk 31
-    buildToolsVersion "32.0.0"
+    buildToolsVersion "31.0.0"
 
     defaultConfig {
         applicationId "com.mefazm.rdpvr"
@@ -17,12 +17,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(RELEASE_STORE_FILE)
-            storePassword RELEASE_STORE_PASSWORD
-            keyAlias RELEASE_KEY_ALIAS
-            keyPassword RELEASE_KEY_PASSWORD
-            v1SigningEnabled true
-            v2SigningEnabled true
+            storeFile file('key.jks')
+            storePassword 'fDfNfH421!'
+            keyAlias 'key'
+            keyPassword 'fDfNfH421!'
         }
     }
 
@@ -33,10 +31,12 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
