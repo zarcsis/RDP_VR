@@ -33,15 +33,21 @@ NDK="${SDK}ndk/${NDK_VERSION}/"
 export ANDROID_NDK_HOME="${NDK}"
 PATH="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH"
 
-# Build OpenSSL
-rm -rf "${TMP_PATH}"
-mkdir -p "${TMP_PATH}"
-cd "${TMP_PATH}"
-"${PROJECT_ROOT}ThirdParty/OpenSSL/Configure" android-arm64 -U__ANDROID_API__ -D__ANDROID_API__=29
-make
-cd "${PROJECT_ROOT}"
+LIB_PATH="${TOOLS_PATH}lib/"
 
-# TODO: Build native components.
+# Build OpenSSL
+if [ ! -d "${LIB_PATH}OpenSSL/" ]; then
+    rm -rf "${TMP_PATH}"
+    mkdir -p "${TMP_PATH}"
+    cd "${TMP_PATH}"
+    "${PROJECT_ROOT}ThirdParty/OpenSSL/Configure" --prefix="${LIB_PATH}OpenSSL/" android-arm64 -U__ANDROID_API__ -D__ANDROID_API__=29
+    make
+    make install
+    cd "${PROJECT_ROOT}"
+    rm -rf "${TMP_PATH}"
+fi
+
+# TODO: Build FreeRDP.
 
 # Install Gradle
 GRADLE="${SDK}gradle/bin/gradle"
