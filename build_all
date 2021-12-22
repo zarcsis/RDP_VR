@@ -74,7 +74,7 @@ fi
 
 # Install Gradle
 GRADLE_EXECUTABLE="${SDK}gradle/bin/gradle"
-if [ ! -f "${GRADLE}" ]; then
+if [ ! -f "${GRADLE_EXECUTABLE}" ]; then
     GRADLE_ZIP="${TOOLS_PATH}gradle.zip"
     test -f "${GRADLE_ZIP}" || wget -O "${GRADLE_ZIP}" "${GRADLE_URL}"
     unzip "${GRADLE_ZIP}" -d "${SDK}"
