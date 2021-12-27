@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RDP VR</string>
+    <string name="hostname">Hostname</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="connect">Connect</string>
 </resources>
