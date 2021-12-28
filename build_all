@@ -2,7 +2,7 @@
 set -e
 
 COMMAND_LINE_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip"
-GRADLE_URL="https://services.gradle.org/distributions/gradle-7.3.2-bin.zip"
+GRADLE_URL="https://services.gradle.org/distributions/gradle-7.3.3-bin.zip"
 CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v3.22.1/cmake-3.22.1-linux-x86_64.tar.gz"
 NDK_VERSION="23.1.7779620"
 ANDROID_API_LEVEL="29"
