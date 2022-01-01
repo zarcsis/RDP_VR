@@ -1,13 +1,13 @@
 package com.mefazm.rdpvr
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
+
 import android.os.Bundle
 import android.text.Editable
 import android.widget.EditText
 import android.widget.Button
 import android.util.Log
-import androidx.core.widget.doAfterTextChanged
 
 private const val TAG = "MainActivity"
 
@@ -32,14 +32,9 @@ class MainActivity : AppCompatActivity() {
         editTextHostname.doAfterTextChanged(textWatcher)
         editTextUsername.doAfterTextChanged(textWatcher)
         editTextTextPassword.doAfterTextChanged(textWatcher)
-    }
 
-    fun getWindowSize() {
-        Log.i(TAG, "SDK API Level: ${Build.VERSION.SDK_INT}")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            TODO("Get Window size for 31 API.")
-        } else {
-            TODO("Get Window size for 29 API.")
+        buttonConnect.setOnClickListener {
+            Log.i(TAG, "Connect clicked.")
         }
     }
 }
