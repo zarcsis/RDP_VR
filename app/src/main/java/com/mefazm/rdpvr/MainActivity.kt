@@ -30,6 +30,15 @@ class MainActivity : AppCompatActivity() {
 
         binding.buttonConnect.setOnClickListener {
             Log.i(javaClass.name, "Connect clicked.")
+            connect()
+        }
+    }
+
+    external fun connect()
+
+    companion object {
+        init {
+            System.loadLibrary("rdpvr")
         }
     }
 }
