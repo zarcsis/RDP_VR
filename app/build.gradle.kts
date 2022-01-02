@@ -6,6 +6,7 @@ plugins {
 android {
     compileSdk = 31
     buildToolsVersion = "31.0.0"
+    ndkVersion = "23.1.7779620"
 
     defaultConfig {
         applicationId = "com.mefazm.rdpvr"
@@ -13,6 +14,9 @@ android {
         targetSdk = 31
         versionCode = 1
         versionName = "1.0"
+        ndk {
+            abiFilters += listOf("arm64-v8a")
+        }
     }
 
     signingConfigs {
@@ -39,6 +43,16 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    externalNativeBuild {
+        cmake {
+            version = "3.18.1"
+        }
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 }
 
