@@ -8,6 +8,7 @@ import androidx.core.widget.doAfterTextChanged
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
+import android.content.Intent
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,15 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.buttonConnect.setOnClickListener {
             Log.i(javaClass.name, "Connect clicked.")
-            connect()
-        }
-    }
-
-    external fun connect()
-
-    companion object {
-        init {
-            System.loadLibrary("rdpvr")
+            startActivity(Intent(this, SessionActivity::class.java))
         }
     }
 }
