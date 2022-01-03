@@ -59,6 +59,7 @@ if [ ! -f "${CMAKE_EXECUTABLE}" ]; then
     rm -rf "${CMAKE_TAR_GZ}"
 fi
 CMAKE_TOOLCHAIN_FILE="${NDK}build/cmake/android.toolchain.cmake"
+PATH="${SDK}cmake/bin:$PATH"
 
 # Build FreeRDP
 if [ ! -d "${LIB_PATH}FreeRDP/" ]; then
