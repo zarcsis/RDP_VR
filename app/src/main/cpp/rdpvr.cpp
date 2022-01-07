@@ -3,6 +3,8 @@
 #include <jni.h>
 
 #include <string>
+#include <sstream>
+#include <iomanip>
 #include <stdexcept>
 
 #include <cstdint>
@@ -24,12 +26,17 @@ static std::string jstringToString(JNIEnv* env, jstring str) {
     const std::size_t utf16CStrDataSize = env->GetStringLength(str);
 
     const std::u16string u16str(u16CStrData, u16CStrData + utf16CStrDataSize - 1);
+    // TODO: Implement conversion from u16string to string
+    std::string outStr;
 
-    __android_log_print(ANDROID_LOG_INFO, TAG, "utf16CStr[%zu]: ", utf16CStrDataSize);
+    std::stringstream ss;
     for (std::size_t i = 0; i < utf16CStrDataSize; ++i) {
-        __android_log_print(ANDROID_LOG_INFO, TAG, "0x%04" PRIX16 " ", u16CStrData[i]);
+        ss << "0x" << std::uppercase << std::setfill('0') << std::setw(sizeof(char16_t) * 2) << std::hex << u16CStrData[i];
+        if (i < utf16CStrDataSize - 1) ss << ' ';
     }
-    return std::string();
+    __android_log_print(ANDROID_LOG_INFO, TAG, "utf16CStr[%zu]: %s", utf16CStrDataSize, ss.str().c_str());
+
+    return outStr;
 }
 
 extern "C"
