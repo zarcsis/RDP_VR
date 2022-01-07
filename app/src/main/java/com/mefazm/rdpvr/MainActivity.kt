@@ -22,16 +22,20 @@ class MainActivity : AppCompatActivity() {
             binding.buttonConnect.isEnabled =
                 binding.editTextHostname.text.isNotEmpty() &&
                 binding.editTextUsername.text.isNotEmpty() &&
-                binding.editTextTextPassword.text.isNotEmpty()
+                binding.editTextPassword.text.isNotEmpty()
         }
 
         binding.editTextHostname.doAfterTextChanged(textWatcher)
         binding.editTextUsername.doAfterTextChanged(textWatcher)
-        binding.editTextTextPassword.doAfterTextChanged(textWatcher)
+        binding.editTextPassword.doAfterTextChanged(textWatcher)
 
         binding.buttonConnect.setOnClickListener {
             Log.i(javaClass.name, "Connect clicked.")
-            startActivity(Intent(this, SessionActivity::class.java))
+            startActivity(Intent(this, SessionActivity::class.java).apply {
+                putExtra("hostname", binding.editTextHostname.text.toString())
+                putExtra("username", binding.editTextUsername.text.toString())
+                putExtra("password", binding.editTextPassword.text.toString())
+            })
         }
     }
 }
