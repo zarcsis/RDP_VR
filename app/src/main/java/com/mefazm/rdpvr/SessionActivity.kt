@@ -12,12 +12,11 @@ class SessionActivity : AppCompatActivity() {
 
         val sessionView = SessionView(this)
         setContentView(sessionView)
-        /* connect(
+        connect(
             intent.getStringExtra("hostname")!!,
             intent.getStringExtra("username")!!,
             intent.getStringExtra("password")!!
-        ) */
-        connect("𐎠𐎠𐎠", "𐎠𐎠𐎠", "𐎠𐎠𐎠")
+        )
     }
 
     private external fun connect(hostname: String, username: String, password: String)
