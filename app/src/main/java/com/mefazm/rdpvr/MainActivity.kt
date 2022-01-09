@@ -7,12 +7,11 @@ import androidx.core.widget.doAfterTextChanged
 
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.content.Intent
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i(javaClass.name, "Create ${javaClass.name} instance.")
+        Log.i("Create instance.")
         super.onCreate(savedInstanceState)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         binding.editTextPassword.doAfterTextChanged(textWatcher)
 
         binding.buttonConnect.setOnClickListener {
-            Log.i(javaClass.name, "Connect clicked.")
+            Log.i("Connect clicked.")
             startActivity(Intent(this, SessionActivity::class.java).apply {
                 putExtra("hostname", binding.editTextHostname.text.toString())
                 putExtra("username", binding.editTextUsername.text.toString())

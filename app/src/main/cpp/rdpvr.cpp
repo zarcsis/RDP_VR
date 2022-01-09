@@ -15,20 +15,20 @@
 
 constexpr const char TAG[] = "com.mefazm.rdpvr.SessionActivity";
 
-static std::string jstringToString(JNIEnv* env, jstring str) {
+static std::string jstringToString(JNIEnv * const env, jstring str) {
     if (nullptr == env) throw std::invalid_argument("env is null.");
     if (nullptr == str) throw std::invalid_argument("str is null.");
     assert(sizeof(jchar) == sizeof(char16_t));
 
     __android_log_print(ANDROID_LOG_INFO, TAG, "jstringToString()");
 
-    auto * const u16CStrData = reinterpret_cast<const char16_t *>(env->GetStringChars(str, nullptr));
+    const jchar * const jStrData = env->GetStringChars(str, nullptr);
+    auto * const u16CStrData = reinterpret_cast<const char16_t *>(jStrData);
     const std::size_t utf16CStrDataSize = env->GetStringLength(str);
-
     const std::u16string u16str(u16CStrData, u16CStrData + utf16CStrDataSize);
-    std::string outStr = std::wstring_convert<std::codecvt_utf8_utf16<char16_t>,char16_t>().to_bytes(u16str);
+    env->ReleaseStringChars(str, jStrData);
 
-    return outStr;
+    return std::wstring_convert<std::codecvt_utf8_utf16<char16_t>,char16_t>().to_bytes(u16str);
 }
 
 extern "C"
