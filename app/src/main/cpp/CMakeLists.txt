@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project("rdpvr" CXX)
 
-add_library(${PROJECT_NAME} SHARED rdpvr.cpp)
+add_library(${PROJECT_NAME} SHARED rdpvr.cpp tools.cpp)
 target_compile_options(${PROJECT_NAME}
     PRIVATE -Wall
     PRIVATE -Wextra
