@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
-COMMAND_LINE_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip"
-GRADLE_URL="https://services.gradle.org/distributions/gradle-7.3.3-bin.zip"
-CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v3.22.1/cmake-3.22.1-linux-x86_64.tar.gz"
-NDK_VERSION="23.1.7779620"
+COMMAND_LINE_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-8092744_latest.zip"
+GRADLE_URL="https://services.gradle.org/distributions/gradle-7.4.2-bin.zip"
+CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v3.23.1/cmake-3.23.1-linux-x86_64.tar.gz"
+NINJA_URL="https://github.com/ninja-build/ninja/releases/download/v1.10.2/ninja-linux.zip"
+NDK_VERSION="24.0.8215888"
 ANDROID_API_LEVEL="29"
 
 PROJECT_ROOT="$(pwd)/"
@@ -61,14 +62,25 @@ fi
 CMAKE_TOOLCHAIN_FILE="${NDK}build/cmake/android.toolchain.cmake"
 PATH="${SDK}cmake/bin:$PATH"
 
+# Install Ninja
+NINJA_EXECUTABLE="${SDK}cmake/bin/ninja"
+if [ ! -f "${NINJA_EXECUTABLE}" ]; then
+    NINJA_ZIP="${TOOLS_PATH}ninja.zip"
+    test -f "${NINJA_ZIP}" || wget -O "${NINJA_ZIP}" "${NINJA_URL}"
+    unzip "${NINJA_ZIP}" -d "${SDK}cmake/bin/"
+    rm -rf "${NINJA_ZIP}"
+fi
+
 # Build FreeRDP
 if [ ! -d "${LIB_PATH}FreeRDP/" ]; then
     rm -rf "${TMP_PATH}"
     mkdir -p "${TMP_PATH}"
     cd "${TMP_PATH}"
-    "${CMAKE_EXECUTABLE}" -Wno-deprecated -Wno-dev --install-prefix "${LIB_PATH}FreeRDP/" -DCMAKE_TOOLCHAIN_FILE="${CMAKE_TOOLCHAIN_FILE}" -DANDROID_ABI="arm64-v8a" -DANDROID_PLATFORM="android-${ANDROID_API_LEVEL}" -DCMAKE_VERBOSE_MAKEFILE="ON" -DOPENSSL_ROOT_DIR="${LIB_PATH}OpenSSL/" "${PROJECT_ROOT}ThirdParty/FreeRDP/"
-    cmake --build . -v -j
-    cmake --install . -v
+    mv "${NDK}toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/execinfo.h" "${NDK}toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/_execinfo.h"
+    "${CMAKE_EXECUTABLE}" -Wno-deprecated -Wno-dev --install-prefix "${LIB_PATH}FreeRDP/" -DCMAKE_TOOLCHAIN_FILE="${CMAKE_TOOLCHAIN_FILE}" -DANDROID_ABI="arm64-v8a" -DANDROID_PLATFORM="android-${ANDROID_API_LEVEL}" -DCMAKE_VERBOSE_MAKEFILE="ON" -DOPENSSL_ROOT_DIR="${LIB_PATH}OpenSSL/" -DWITH_FFMPEG="OFF" "${PROJECT_ROOT}ThirdParty/FreeRDP/"
+    "${CMAKE_EXECUTABLE}" --build . -v -j
+    "${CMAKE_EXECUTABLE}" --install . -v
+    mv "${NDK}toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/_execinfo.h" "${NDK}toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/execinfo.h"
     cd "${PROJECT_ROOT}"
     rm -rf "${TMP_PATH}"
 fi
