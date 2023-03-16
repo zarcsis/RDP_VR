@@ -33,8 +33,8 @@ export ANDROID_SDK_ROOT="${SDK}"
 # Install NDK
 "${SDK_MANAGER}" --install "ndk;${NDK_VERSION}"
 NDK="${SDK}ndk/${NDK_VERSION}/"
-export ANDROID_NDK_HOME="${NDK}"
-PATH="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH"
+export ANDROID_NDK_ROOT="${NDK}"
+PATH="$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH"
 
 LIB_PATH="${TOOLS_PATH}lib/"
 
@@ -76,11 +76,9 @@ if [ ! -d "${LIB_PATH}FreeRDP/" ]; then
     rm -rf "${TMP_PATH}"
     mkdir -p "${TMP_PATH}"
     cd "${TMP_PATH}"
-    mv "${NDK}toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/execinfo.h" "${NDK}toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/_execinfo.h"
-    "${CMAKE_EXECUTABLE}" -Wno-deprecated -Wno-dev --install-prefix "${LIB_PATH}FreeRDP/" -DCMAKE_TOOLCHAIN_FILE="${CMAKE_TOOLCHAIN_FILE}" -DANDROID_ABI="arm64-v8a" -DANDROID_PLATFORM="android-${ANDROID_API_LEVEL}" -DCMAKE_VERBOSE_MAKEFILE="ON" -DOPENSSL_ROOT_DIR="${LIB_PATH}OpenSSL/" -DWITH_FFMPEG="OFF" "${PROJECT_ROOT}ThirdParty/FreeRDP/"
+    "${CMAKE_EXECUTABLE}" -Wno-deprecated -Wno-dev --install-prefix "${LIB_PATH}FreeRDP/" -DCMAKE_TOOLCHAIN_FILE="${CMAKE_TOOLCHAIN_FILE}" -DANDROID_ABI="arm64-v8a" -DANDROID_PLATFORM="android-${ANDROID_API_LEVEL}" -DCMAKE_VERBOSE_MAKEFILE="ON" -DOPENSSL_ROOT_DIR="${LIB_PATH}OpenSSL/" -D_OPENSSL_VERSION="3.1.0" -DWITH_FFMPEG="OFF" "${PROJECT_ROOT}ThirdParty/FreeRDP/"
     "${CMAKE_EXECUTABLE}" --build . -v -j
     "${CMAKE_EXECUTABLE}" --install . -v
-    mv "${NDK}toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/_execinfo.h" "${NDK}toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/execinfo.h"
     cd "${PROJECT_ROOT}"
     rm -rf "${TMP_PATH}"
 fi
