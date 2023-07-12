@@ -44,8 +44,8 @@ if [ ! -d "${LIB_PATH}OpenSSL/" ]; then
     mkdir -p "${TMP_PATH}"
     cd "${TMP_PATH}"
     "${PROJECT_ROOT}ThirdParty/OpenSSL/Configure" --prefix="${LIB_PATH}OpenSSL/" android-arm64 -U__ANDROID_API__ -D__ANDROID_API__="${ANDROID_API_LEVEL}"
-    make
-    make install
+    make -j
+    make install -j
     cd "${PROJECT_ROOT}"
     rm -rf "${TMP_PATH}"
 fi
