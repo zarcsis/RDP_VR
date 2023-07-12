@@ -17,7 +17,7 @@ class SessionView(context: Context) : View(context) {
         super.onDraw(canvas)
         Log.i("width: $width, height: $height")
         val bmp = createBitmap(colors, w, h, Bitmap.Config.ARGB_8888)
-        canvas?.drawBitmap(bmp, null, dst,null)
+        canvas.drawBitmap(bmp, null, dst, null)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
