@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.mefazm.rdpvr"
-        minSdk = 29
+        minSdk = 32
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"

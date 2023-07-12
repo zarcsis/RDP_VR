@@ -6,7 +6,7 @@ GRADLE_URL="https://services.gradle.org/distributions/gradle-8.2.1-bin.zip"
 CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-linux-x86_64.tar.gz"
 NINJA_URL="https://github.com/ninja-build/ninja/releases/download/v1.11.1/ninja-linux.zip"
 NDK_VERSION="25.2.9519653"
-ANDROID_API_LEVEL="29"
+ANDROID_API_LEVEL="32"
 
 PROJECT_ROOT="$(pwd)/"
 
