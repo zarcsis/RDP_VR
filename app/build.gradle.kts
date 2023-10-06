@@ -6,7 +6,7 @@ plugins {
 android {
     compileSdk = 34
     buildToolsVersion = "34.0.0"
-    ndkVersion = "25.2.9519653"
+    ndkVersion = "26.0.10792818"
 
     defaultConfig {
         applicationId = "com.mefazm.rdpvr"
@@ -15,6 +15,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         ndk {
+            //noinspection ChromeOsAbiSupport
             abiFilters += listOf("arm64-v8a")
         }
     }
@@ -31,14 +32,13 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
         }
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
@@ -47,20 +47,17 @@ android {
 
     externalNativeBuild {
         cmake {
-            version = "3.26.4"
+            version = "3.27.6"
             path = file("src/main/cpp/CMakeLists.txt")
         }
     }
 
-    buildFeatures {
-        viewBinding = true
-    }
     namespace = "com.mefazm.rdpvr"
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 }

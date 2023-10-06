@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
-COMMAND_LINE_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip"
-GRADLE_URL="https://services.gradle.org/distributions/gradle-8.2.1-bin.zip"
-CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-linux-x86_64.tar.gz"
+COMMAND_LINE_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip"
+GRADLE_URL="https://services.gradle.org/distributions/gradle-8.4-bin.zip"
+CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v3.27.3/cmake-3.27.3-linux-x86_64.tar.gz"
 NINJA_URL="https://github.com/ninja-build/ninja/releases/download/v1.11.1/ninja-linux.zip"
-NDK_VERSION="25.2.9519653"
+NDK_VERSION="26.0.10792818"
 ANDROID_API_LEVEL="32"
 
 PROJECT_ROOT="$(pwd)/"
