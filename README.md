@@ -1,2 +1,2 @@
 # RDP_VR
-Remote Desctop Client for Oculus Quest 2
+Remote Desctop Client for Meta Quest 3
