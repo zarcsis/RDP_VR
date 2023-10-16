@@ -52,6 +52,10 @@ android {
         }
     }
 
+    buildFeatures {
+        dataBinding = true
+    }
+
     namespace = "com.mefazm.rdpvr"
 }
 
