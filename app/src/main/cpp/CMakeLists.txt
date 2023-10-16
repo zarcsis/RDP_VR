@@ -10,6 +10,7 @@ target_compile_options(${PROJECT_NAME}
     PRIVATE -Wall
     PRIVATE -Wextra
     PRIVATE -Werror
+    PRIVATE -Wno-deprecated-declarations
 )
 find_library(log-lib log)
 target_link_libraries(${PROJECT_NAME} ${log-lib})
