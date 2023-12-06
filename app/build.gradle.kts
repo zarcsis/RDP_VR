@@ -16,7 +16,6 @@ android {
         versionCode = 1
         versionName = "1.0"
         ndk {
-            //noinspection ChromeOsAbiSupport
             abiFilters += listOf("arm64-v8a")
         }
     }
@@ -48,7 +47,7 @@ android {
 
     externalNativeBuild {
         cmake {
-            version = "3.27.8"
+            version = "3.27.9"
             path = file("src/main/cpp/CMakeLists.txt")
         }
     }
