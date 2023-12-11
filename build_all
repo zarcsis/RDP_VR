@@ -3,7 +3,7 @@ set -e
 
 COMMAND_LINE_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip"
 GRADLE_URL="https://services.gradle.org/distributions/gradle-8.5-bin.zip"
-CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v3.27.9/cmake-3.27.9-linux-x86_64.tar.gz"
+CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v3.28.0/cmake-3.28.0-linux-x86_64.tar.gz"
 NINJA_URL="https://github.com/ninja-build/ninja/releases/download/v1.11.1/ninja-linux.zip"
 NDK_VERSION="26.1.10909125"
 ANDROID_API_LEVEL="32"
