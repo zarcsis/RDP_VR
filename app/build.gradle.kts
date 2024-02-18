@@ -7,7 +7,7 @@ plugins {
 android {
     compileSdk = 34
     buildToolsVersion = "34.0.0"
-    ndkVersion = "26.1.10909125"
+    ndkVersion = "26.2.11394342"
 
     defaultConfig {
         applicationId = "com.mefazm.rdpvr"
@@ -47,7 +47,7 @@ android {
 
     externalNativeBuild {
         cmake {
-            version = "3.28.1"
+            version = "3.28.3"
             path = file("src/main/cpp/CMakeLists.txt")
         }
     }
