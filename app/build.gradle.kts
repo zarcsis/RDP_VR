@@ -7,7 +7,7 @@ plugins {
 android {
     compileSdk = 34
     buildToolsVersion = "34.0.0"
-    ndkVersion = "26.2.11394342"
+    ndkVersion = "26.3.11579264"
 
     defaultConfig {
         applicationId = "com.mefazm.rdpvr"
@@ -47,7 +47,7 @@ android {
 
     externalNativeBuild {
         cmake {
-            version = "3.28.3"
+            version = "3.29.3"
             path = file("src/main/cpp/CMakeLists.txt")
         }
     }
@@ -61,8 +61,8 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
+    implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 }
