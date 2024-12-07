@@ -1,10 +1,11 @@
-cmake_minimum_required(VERSION 3.31.1)
+cmake_minimum_required(VERSION 3.31.2)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 
 project("rdpvr" CXX)
+
+list(APPEND CMAKE_FIND_ROOT_PATH "${CMAKE_SOURCE_DIR}/ThirdParty/")
 
 add_library(${PROJECT_NAME} SHARED rdpvr.cpp tools.cpp)
 target_compile_options(${PROJECT_NAME}
@@ -14,4 +15,13 @@ target_compile_options(${PROJECT_NAME}
     PRIVATE -Wno-deprecated-declarations
 )
 find_library(log-lib log)
-target_link_libraries(${PROJECT_NAME} ${log-lib})
+find_package(FreeRDP-Client REQUIRED)
+find_package(OpenSSL REQUIRED)
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE ${log-lib}
+    PRIVATE freerdp-client
+    PRIVATE OpenSSL::SSL
+)
+target_include_directories(${PROJECT_NAME}
+    PRIVATE ${FreeRDP-Client_INCLUDE_DIR}
+)

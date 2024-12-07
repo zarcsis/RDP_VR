@@ -1,6 +1,8 @@
 #include "log.h"
 #include "tools.h"
 
+#include <freerdp/freerdp.h>
+
 #include <sstream>
 #include <iomanip>
 #include <stdexcept>
@@ -10,6 +12,11 @@
 #include <cstdint>
 #include <cinttypes>
 #include <cassert>
+
+struct VRContext
+{
+	rdpClientContext common;
+};
 
 extern "C"
 JNIEXPORT void JNICALL
@@ -24,6 +31,20 @@ Java_com_mefazm_rdpvr_SessionActivity_connect(JNIEnv* env, jobject obj, jstring 
          jStringToString(env, hostname).c_str(),
          jStringToString(env, username).c_str(),
          jStringToString(env, password).c_str());
+    RDP_CLIENT_ENTRY_POINTS clientEntryPoints = {
+        .Size = sizeof(RDP_CLIENT_ENTRY_POINTS),
+        .Version = RDP_CLIENT_INTERFACE_VERSION,
+        .settings = nullptr,
+        .GlobalInit = nullptr,
+        .GlobalUninit = nullptr,
+        .ContextSize = sizeof(VRContext),
+        .ClientNew = nullptr,
+        .ClientFree = nullptr,
+        .ClientStart = nullptr,
+        .ClientStop = nullptr
+    };
+    rdpContext* const context = freerdp_client_context_new(&clientEntryPoints);
+    if (nullptr != context) stream_dump_register_handlers(context, CONNECTION_STATE_MCS_CREATE_REQUEST, false);
 }
 
 extern "C"
