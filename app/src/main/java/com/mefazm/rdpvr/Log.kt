@@ -1,4 +1,4 @@
-package com.mefazm.rdpvr
+package com.mefazm.rdvr
 
 class Log {
     companion object {

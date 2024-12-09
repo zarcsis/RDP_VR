@@ -9,7 +9,7 @@ android {
     ndkVersion = "27.2.12479018"
 
     defaultConfig {
-        applicationId = "com.mefazm.rdpvr"
+        applicationId = "com.mefazm.rdvr"
         minSdk = 32
         targetSdk = 35
         versionCode = 1
@@ -56,7 +56,7 @@ android {
         viewBinding = true
     }
 
-    namespace = "com.mefazm.rdpvr"
+    namespace = "com.mefazm.rdvr"
 }
 
 dependencies {

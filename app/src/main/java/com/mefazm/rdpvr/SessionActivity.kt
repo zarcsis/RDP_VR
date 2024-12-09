@@ -1,4 +1,4 @@
-package com.mefazm.rdpvr
+package com.mefazm.rdvr
 
 import androidx.appcompat.app.AppCompatActivity
 
@@ -52,7 +52,7 @@ class SessionActivity : AppCompatActivity() {
 
     companion object {
         init {
-            System.loadLibrary("rdpvr")
+            System.loadLibrary("rdvr")
         }
     }
 

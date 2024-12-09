@@ -1,6 +1,6 @@
-package com.mefazm.rdpvr
+package com.mefazm.rdvr
 
-import com.mefazm.rdpvr.databinding.ActivityMainBinding
+import com.mefazm.rdvr.databinding.ActivityMainBinding
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged

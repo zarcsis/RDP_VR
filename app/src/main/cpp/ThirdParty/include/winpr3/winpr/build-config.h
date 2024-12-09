@@ -5,8 +5,8 @@
 #define WINPR_KEYMAP_PATH ""
 #define WINPR_PLUGIN_PATH ""
 
-#define WINPR_INSTALL_PREFIX "/home/mefazm/source/RDP_VR/app/src/main/cpp/ThirdParty"
-#define WINPR_INSTALL_SYSCONFDIR "/home/mefazm/source/RDP_VR/app/src/main/cpp/ThirdParty/etc"
+#define WINPR_INSTALL_PREFIX "/home/mefazm/source/RDVR/app/src/main/cpp/ThirdParty"
+#define WINPR_INSTALL_SYSCONFDIR "/home/mefazm/source/RDVR/app/src/main/cpp/ThirdParty/etc"
 
 #define WINPR_LIBRARY_PATH ""
 

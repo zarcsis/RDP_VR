@@ -12,7 +12,7 @@ struct VRContext
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_mefazm_rdpvr_SessionActivity_connect(JNIEnv* env, jobject obj, jstring hostname, jstring username, jstring password) {
+Java_com_mefazm_rdvr_SessionActivity_connect(JNIEnv* env, jobject obj, jstring hostname, jstring username, jstring password) {
     if (nullptr == env) throw std::invalid_argument(STRINGIFY(env) " is null.");
     if (nullptr == hostname) throw std::invalid_argument(STRINGIFY(hostname) " is null.");
     if (nullptr == username) throw std::invalid_argument(STRINGIFY(username) " is null.");
@@ -41,7 +41,7 @@ Java_com_mefazm_rdpvr_SessionActivity_connect(JNIEnv* env, jobject obj, jstring 
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_mefazm_rdpvr_SessionActivity_resize(JNIEnv *, jobject, jint width, jint height) {
+Java_com_mefazm_rdvr_SessionActivity_resize(JNIEnv *, jobject, jint width, jint height) {
     if (1 > width) throw std::invalid_argument(STRINGIFY(width) " < 1.");
     if (1 > height) throw std::invalid_argument(STRINGIFY(height) " < 1.");
     LOGI("width: \"%d\", height: \"%d\"", width, height);

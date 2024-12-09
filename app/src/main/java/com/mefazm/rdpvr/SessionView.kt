@@ -1,4 +1,4 @@
-package com.mefazm.rdpvr
+package com.mefazm.rdvr
 
 import android.content.Context
 import android.graphics.Bitmap

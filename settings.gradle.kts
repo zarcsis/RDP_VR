@@ -5,5 +5,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "RDP VR"
+rootProject.name = "RDVR"
 include(":app")

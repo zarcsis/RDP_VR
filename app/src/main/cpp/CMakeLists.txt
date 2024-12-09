@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.31.2)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-project("rdpvr" CXX)
+project("rdvr" CXX)
 
 list(APPEND CMAKE_FIND_ROOT_PATH "${CMAKE_SOURCE_DIR}/ThirdParty/")
 
