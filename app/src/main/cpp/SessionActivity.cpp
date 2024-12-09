@@ -3,19 +3,11 @@
 
 #include <freerdp/freerdp.h>
 
-#include <sstream>
-#include <iomanip>
 #include <stdexcept>
-#include <locale>
-#include <codecvt>
-
-#include <cstdint>
-#include <cinttypes>
-#include <cassert>
 
 struct VRContext
 {
-	rdpClientContext common;
+    rdpClientContext common;
 };
 
 extern "C"
