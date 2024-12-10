@@ -1,48 +1,21 @@
 #!/usr/bin/env bash
 set -e
 
-COMMAND_LINE_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip"
-GRADLE_URL="https://services.gradle.org/distributions/gradle-8.11.1-bin.zip"
 NDK_VERSION="27.2.12479018"
 ANDROID_API_LEVEL="32"
 
-PROJECT_ROOT="$(pwd)/"
-
-TOOLS_PATH="${PROJECT_ROOT}tools/"
-mkdir -p "${TOOLS_PATH}"
-TMP_PATH="${TOOLS_PATH}tmp/"
-
-# Install SDK
-SDK="${TOOLS_PATH}SDK/"
-SDK_MANAGER="${SDK}cmdline-tools/latest/bin/sdkmanager"
-if [ ! -f "${SDK_MANAGER}" ]; then
-    COMMAND_LINE_TOOLS_ZIP="${TOOLS_PATH}commandlinetools.zip"
-    test -f "${COMMAND_LINE_TOOLS_ZIP}" || wget -O "${COMMAND_LINE_TOOLS_ZIP}" "${COMMAND_LINE_TOOLS_URL}"
-    rm -rf "${TMP_PATH}"
-    unzip "${COMMAND_LINE_TOOLS_ZIP}" -d "${TMP_PATH}"
-    SDK_INSTALLER="${TMP_PATH}cmdline-tools/bin/sdkmanager"
-    yes | "${SDK_INSTALLER}" --sdk_root="${SDK}" --licenses
-    "${SDK_INSTALLER}" --sdk_root="${SDK}" --install "cmdline-tools;latest"
-    rm -rf "${TMP_PATH}"
-    rm -rf "${COMMAND_LINE_TOOLS_ZIP}"
-fi
-export ANDROID_SDK_ROOT="${SDK}"
-
-# Install NDK
-"${SDK_MANAGER}" --install "ndk;${NDK_VERSION}"
-NDK="${SDK}ndk/${NDK_VERSION}/"
-export ANDROID_NDK_ROOT="${NDK}"
-PATH="$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH"
-CMAKE_TOOLCHAIN_FILE="${NDK}build/cmake/android.toolchain.cmake"
-
-LIB_PATH="${PROJECT_ROOT}app/src/main/cpp/ThirdParty/"
+PROJECT_ROOT="$(pwd)"
+TMP_PATH="${PROJECT_ROOT}/tmp"
+PREFIX="${PROJECT_ROOT}/app/src/main/cpp/ThirdParty"
 
 # Build OpenSSL
-if [ ! -f "${LIB_PATH}lib/libssl.so" ]; then
+if [ ! -f "${PREFIX}/lib/libssl.so" ]; then
+    export ANDROID_NDK_ROOT="${ANDROID_HOME}/ndk/${NDK_VERSION}"
+    PATH="${PATH}:${ANDROID_NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64/bin"
     rm -rf "${TMP_PATH}"
     mkdir -p "${TMP_PATH}"
     cd "${TMP_PATH}"
-    "${PROJECT_ROOT}ThirdParty/OpenSSL/Configure" --prefix="${LIB_PATH}" android-arm64 -U__ANDROID_API__ -D__ANDROID_API__="${ANDROID_API_LEVEL}"
+    "${PROJECT_ROOT}/ThirdParty/OpenSSL/Configure" --prefix="${PREFIX}" android-arm64 -U__ANDROID_API__ -D__ANDROID_API__="${ANDROID_API_LEVEL}"
     make -j
     make install -j
     cd "${PROJECT_ROOT}"
@@ -50,26 +23,16 @@ if [ ! -f "${LIB_PATH}lib/libssl.so" ]; then
 fi
 
 # Build FreeRDP
-if [ ! -f "${LIB_PATH}lib/libfreerdp3.so" ]; then
+if [ ! -f "${PREFIX}/lib/libfreerdp3.so" ]; then
     rm -rf "${TMP_PATH}"
     mkdir -p "${TMP_PATH}"
     cd "${TMP_PATH}"
-    cmake --install-prefix "${LIB_PATH}" -DCMAKE_TOOLCHAIN_FILE="${CMAKE_TOOLCHAIN_FILE}" -DANDROID_ABI="arm64-v8a" -DANDROID_PLATFORM="android-${ANDROID_API_LEVEL}" -DWITH_SWSCALE="OFF" -DCMAKE_VERBOSE_MAKEFILE="ON" -DOPENSSL_ROOT_DIR="${LIB_PATH}" -DWITH_FFMPEG="OFF" -DWITH_CLIENT="OFF" -DWITH_SERVER="OFF" -DWITH_X11="OFF" "${PROJECT_ROOT}ThirdParty/FreeRDP/"
+    cmake --install-prefix "${PREFIX}" -DCMAKE_TOOLCHAIN_FILE="${ANDROID_HOME}/ndk/${NDK_VERSION}/build/cmake/android.toolchain.cmake" -DANDROID_ABI="arm64-v8a" -DANDROID_PLATFORM="android-${ANDROID_API_LEVEL}" -DWITH_SWSCALE="OFF" -DCMAKE_VERBOSE_MAKEFILE="ON" -DOPENSSL_ROOT_DIR="${PREFIX}" -DWITH_FFMPEG="OFF" -DWITH_CLIENT="OFF" -DWITH_SERVER="OFF" -DWITH_X11="OFF" "${PROJECT_ROOT}/ThirdParty/FreeRDP/"
     cmake --build . -v -j
     cmake --install . -v
     cd "${PROJECT_ROOT}"
     rm -rf "${TMP_PATH}"
 fi
 
-# Install Gradle
-GRADLE_EXECUTABLE="${SDK}gradle/bin/gradle"
-if [ ! -f "${GRADLE_EXECUTABLE}" ]; then
-    GRADLE_ZIP="${TOOLS_PATH}gradle.zip"
-    test -f "${GRADLE_ZIP}" || wget -O "${GRADLE_ZIP}" "${GRADLE_URL}"
-    unzip "${GRADLE_ZIP}" -d "${SDK}"
-    mv ${SDK}gradle-* "${SDK}gradle"
-    rm -rf "${GRADLE_ZIP}"
-fi
-
 # Build APK
-"${GRADLE_EXECUTABLE}" build
+./gradlew build
