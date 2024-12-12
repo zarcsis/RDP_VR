@@ -17,6 +17,11 @@ android {
         ndk {
             abiFilters += listOf("arm64-v8a")
         }
+        externalNativeBuild {
+            cmake {
+                arguments.add("-Wno-deprecated")
+            }
+        }
     }
 
     signingConfigs {
